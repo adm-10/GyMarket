@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+  <title>Producto</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-1 ">
+           <div class="col-md-8">
+                <img th:src="${#strings.isEmpty(producto.imagen)} ? 'https://demofree.sirv.com/nope-not-here.jpg/350x260' : ${producto.imagen}"
+                     class="img-fluid mx-auto d-block" alt="Image">
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h3 th:text="${producto.nombre}"></h3>
+                </div>
+                <div>
+                    <p th:text="${producto.descripcion}"></p>
+                </div>
+                <div class="pull-right">
+                    <h4>
+                        <strong th:text="${#numbers.formatCurrency(producto.pvp)}"></strong>
+                    </h4>
+                </div>
+                <a th:href="@{/app/carrito/add/{id}(id=${producto.id})}" type="button"
+                   class="btn btn-lg btn-success" sec:authorize="isAuthenticated()">
+                    <i class="fa fa-shopping-cart"></i>Comprar</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<footer th:replace="~{fragmentos::pie}"></footer>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+</body>
+</html>

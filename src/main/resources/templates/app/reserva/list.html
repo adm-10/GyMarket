@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Listado</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<main>
+    <div class="container">
+        <div class="row" th:if="${#lists.isEmpty(mis_reservas)}">
+            <div class="col-md-10 offset-md-1 ">
+                <div class="mt-4 p-1 bg-primary text-white rounded">
+                    <h2 class="text-center">Aún no ha realizado ninguna reserva</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:unless="${#lists.isEmpty(mis_reservas)}">
+            <div class="col-md-4 offset-md-4">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="reserva : ${mis_reservas}">
+                        <td><span th:text="${reserva.id}">1</span>
+                        <td><span th:text="${#temporals.format(reserva.fechaReserva,'dd/MMM/yyyy HH:mm')}"></span></td>
+                        <td><a th:href="@{/app/reserva/confirmacion/{id}(id=${reserva.id})}" class="btn btn-info">Ver Ticket</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</main>
+
+
+
+
+
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+</body>
+</html>

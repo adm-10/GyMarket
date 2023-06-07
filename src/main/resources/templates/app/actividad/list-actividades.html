@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Nuestras Actividades</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<main>
+    <div class="container">
+        <div class="py-4 text-center">
+            <h3>Nuestras Actividades</h3>
+        </div>
+        <div class="px-3 py-2 border-bottom mb-3">
+            <div class="container d-flex flex-wrap justify-content-center">
+                <form  class="form"  >
+                    <input type="text" class="form-control"  placeholder="Buscar..."
+                           name="q" th:value="${param.q}"/>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <!-- @Controller ZonaPublic-->
+            <div class="col-lg-4" th:each="actividad : ${listaActividades}">
+
+                <div class="card" style="cursor: pointer;">
+                    <a th:href="@{/public/actividad/{id}(id=${actividad.id})}" class="stretched-link"></a>
+                    <div class="card-header text-dark">
+                        <h3 th:text="${actividad.nombre}"></h3>
+                    </div>
+                    <div class="card-body">
+                        <img th:src="${#strings.isEmpty(actividad.imagen)} ? 'https://demofree.sirv.com/nope-not-here.jpg/350x260' : ${actividad.imagen}"
+                             class="img-fluid mx-auto d-block" alt="Image" style="height: 300px;">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6" sec:authorize="isAuthenticated()">
+                                <a th:href="@{/app/carritoreserva/add/{id}(id=${actividad.id})}" class="btn btn-success" role="button"><i class="fa fa-shopping-cart"></i>&nbsp;Reservar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragmentos::pie}"></footer>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+</body>
+</html>

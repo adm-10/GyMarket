@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+  <title>Tu Actividad</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<main>
+  <div class="container">
+    <div class="py-4 text-center">
+      <h3>Tu Actividad</h3>
+    </div>
+    <div class="row" th:if="${#lists.isEmpty(listaSearch)}">
+      <div class="col-md-10 offset-md-1 ">
+        <div class="mt-4 p-1 bg-primary text-white rounded">
+          <h2 class="text-center">No hay ninguna actividad para ti</h2>
+        </div>
+      </div>
+    </div>
+    <div class="px-3 py-2 border-bottom mb-3">
+    </div>
+    <div class="row">
+      <!-- @Controller ZonaPublic-->
+      <div class="col-lg-4" th:each="actividad : ${listaSearch}">
+
+        <div class="card" style="cursor: pointer;">
+          <div class="card-header text-dark">
+            <h3 th:text="${actividad.nombre}"></h3>
+          </div>
+          <div class="card-body">
+            <img th:src="${#strings.isEmpty(actividad.imagen)} ? 'https://demofree.sirv.com/nope-not-here.jpg/350x260' : ${actividad.imagen}"
+                 class="img-fluid mx-auto d-block" alt="Image" style="height: 300px;">
+          </div>
+          <div class="card-footer">
+            <div class="card-header text-dark">
+              <strong>Dificultad:</strong> <span th:text="${actividad.dificultad}"></span>
+            </div>
+            <div class="card-header text-dark">
+              <strong>Objetivo:</strong> <span th:text="${actividad.objetivo}"></span>
+            </div>
+            <div class="card-header text-dark">
+              <strong>Descripción:</strong> <span th:text="${actividad.descripcion}"></span>
+            </div>
+            <div class="card-header text-dark">
+              <strong>Días:</strong> <span th:text="${actividad.dias}"></span>
+            </div>
+            <div class="card-header text-dark">
+              <strong>Hora de la Actividad:</strong> <span th:text="${actividad.horaActividad}"></span>
+            </div>
+            <div class="row">
+              <div class="col-md-6" sec:authorize="isAuthenticated()">
+                <a th:href="@{/app/carritoreserva/add/{id}(id=${actividad.id})}" class="btn btn-success" role="button"><i class="fa fa-shopping-cart"></i>&nbsp;Reservar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+
+<footer th:replace="~{fragmentos::pie}"></footer>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+
+</html>

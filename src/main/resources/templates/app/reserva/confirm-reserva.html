@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+  <title>Confirmación</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-6 offset-3">
+        <div class="d-flex">
+          <h2>Ticket</h2>
+          <h3 class="ms-auto">
+            Reserva <span th:text="${reserva.id}">1234</span>
+          </h3>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-6">
+            <address>
+              <strong>Reserva hecha por:</strong><br>
+              <span th:text="${#authentication.name}"></span><br>
+            </address>
+          </div>
+          <div class="col-6 text-end">
+            <address>
+              <strong>Fecha de reserva:</strong><br> <span
+                    th:text="${#temporals.format(reserva.fechaReserva,'dd/MMM/yyyy HH:mm')}"></span><br>
+              <br>
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 offset-md-3 ">
+        <div class="card">
+          <div class="card-header">
+            <h3>Mi Reserva</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Actividad</th>
+                <td class="text-right"><strong>Día</strong></td>
+                <td class="text-right"><strong>Hora</strong></td>
+                <td class="text-right"><strong>Característica</strong></td>
+                <td class="text-right"><strong>Nivel</strong></td>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="actividad : ${actividades}">
+                <td><span th:text="${actividad.nombre}"></span></td>
+                <td><span th:text="${actividad.dias}"></span></td>
+                <td><span th:text="${actividad.horaActividad}"></span></td>
+                <td><span th:text="${actividad.objetivo}"></span></td>
+                <td><span th:text="${actividad.dificultad}"></span></td>
+              </tr>
+              </tbody>
+            </table>
+            <a th:href="@{/app/reserva/delete/{id}(id=${reserva.id})}" class="btn btn-danger col-sm-2">Cancelar Reserva</a>
+            <a th:href="@{/app/reserva/confirmacion/{id}/pdf(id=${reserva.id})}" class="btn btn-primary col-sm-2">Descargar PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+</main>
+
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+</body>
+</html>

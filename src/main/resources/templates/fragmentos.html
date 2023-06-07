@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Fragmento #1 : head contiene referencias de css and js -->
+
+<head th:fragment="encabezado(titulo,enlaces)">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title th:replace="${titulo}">Fragmentos GyMarket</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font awesome icons -->
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet">
+    <!--  Para que sirva boostrap encabezado-->
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/estilos.css}" rel="stylesheet">
+    <!-- Estilos o scripts adicionales -->
+    <th:block th:replace="${enlaces}" />
+
+</head>
+
+<body>
+<!-- Fragmento #2: Barra de navegación -->
+
+<header class="site-header sticky-top py-0"  th:fragment="barra-nav">
+<div class="px-3 py-2 text-bg-dark" id="fullContainer">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                <img src="/img/logo2.png" alt="Logo de GyMarket" style="width: 100px; height: auto;">
+            </a>
+            <ul class="nav col-12 col-lg-auto my-2 justify-content-center text-small">
+<!--                lightswitch
+                <li  sec:authorize="isAuthenticated()" class="nav-link text-white">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="lightSwitch"> <i class="far fa-sun"></i> </label>
+                        <input class="form-check-input" type="checkbox" id="lightSwitch"/>
+                    </div>
+                </li>
+                 Escoger idioma
+                <li><a  sec:authorize="isAuthenticated()"  class="nav-link text-white" th:href="@{''(lang=es_ES)}">Español</a></li>
+                <li><a  sec:authorize="isAuthenticated()" class="nav-link text-white" th:href="@{''(lang=en_GB)}">Inglés (UK)</a></li>
+                  Inicio -->
+                <li>
+                    <a href="#" class="nav-link text-secondary" th:href="@{/}">
+                        <span class="fas fa-university"></span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <!--Ver Mis Libros(todos) -->
+                <li>
+                    <a href="#" sec:authorize="hasAnyRole('ADMIN', 'PREMIUM')"  class="nav-link text-white"
+                       th:href="@{/app/search}">
+                        <span class="fas fa-search"></span>
+                        <span >Search Actividad</span>
+                    </a>
+                </li>
+
+                <!--Tienda/Productos -->
+                <li>
+                    <a sec:authorize="isAuthenticated()"  class="nav-link text-white"
+                       th:href="@{/app/tienda}">
+                        <span class="fas fa-cash-register"></span>
+                        <span >Tienda</span>
+                    </a>
+                </li>
+                <li>
+                    <a sec:authorize="isAuthenticated()"  class="nav-link text-white"
+                      th:href="@{/app/list}">
+                        <span class="fas fa-futbol"></span>
+                        <span >Actividades</span>
+                    </a>
+                </li>
+                <li>
+                    <a sec:authorize="isAuthenticated()" class="nav-link text-white"
+                       th:href="@{/app/miscompras}">
+                        <span class="fas fa-plus"></span>
+                        <span>Mis Compras</span>
+                    </a>
+                </li>
+                <!-- Ver mis Reservas-->
+                <li>
+                    <a sec:authorize="isAuthenticated()"  class="nav-link text-white"
+                       th:href="@{/app/misreservas}">
+                        <span class="far fa-check-square"></span>
+                        <span >Mis Reservas</span>
+                    </a>
+                </li>
+                <!-- Gestion Administrador-->
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="fas fa-user-cog"></span>
+                        <span>Administración</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#" th:href="@{/app/allproductos}">Gestión de productos</a></li>
+                        <li><a class="dropdown-item" href="#" th:href="@{/app/admin-actividades}">Gestión de actividades</a></li>
+                    </ul>
+                </li>
+
+                <!-- Iniciar sesión de usuario-->
+
+                <li >
+                    <a href="#" sec:authorize="!isAuthenticated()" class="nav-link text-secondary"
+                       th:href="@{/auth/login}">
+                        <span class="fas fa-user-plus fa-spin"></span>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="#" sec:authorize="!isAuthenticated()" class="nav-link text-secondary"
+                       th:href="@{/auth/register}">
+                        <span class="fas fa-user"></span>
+                        <span>Registro</span>
+                    </a>
+                </li>
+
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       role="button">
+                        <i class="fas fa-user"></i>
+                        <span >Usuario :</span>
+                        <span th:text="${#authentication.name}"></span> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                               href="javascript:document.getElementById('logoutForm').submit()">
+                            <i class="fas fa-sign-out-alt"></i>Logout</a>
+                        </li>
+                    </ul>
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm"></form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</header>
+
+
+
+<!-- Modal de LOGOUT index -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1"  th:fragment="modal-logout">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark">Salir</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-dark">
+                <p>¿Seguro?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#" th:onclick="|javascript:doLogout()|" class="btn btn-danger">Salir</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Cuerpo  -->
+<main></main>
+
+<!-- Fragmento #3: Pie de página -->
+<footer class="mt-auto py-3 text-muted text-center text-small text-bg-dark" th:fragment="pie">
+    <div class="container">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </div>
+</footer>
+
+
+<!-- Fragmento #4. Javascript final -->
+<th:block th:fragment="jsfinal(scripts)">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+       <!-- Scripts adicionales -->
+    <th:block th:replace="${scripts}" />
+</th:block>
+
+
+</body>
+</html>

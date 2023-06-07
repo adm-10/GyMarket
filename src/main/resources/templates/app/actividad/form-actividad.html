@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Formulario Actividad</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<main>
+    <div class="container">
+        <div class="justify-content-center">
+            <div class="py-4 text-center">
+                <h3>Formulario Actividad</h3>
+            </div>
+            <div class="col-auto bg-light p-5">
+                <form method="post" action="#" enctype="multipart/form-data"
+                      th:action="${actividad.id != 0} ? @{/app/actividad/edit/submit} : @{/app/actividad/new/submit}"
+                      th:object="${actividad}">
+                    <h4 class="mb-3" th:text="${actividad.id != 0} ? 'Editar Actividad' : 'Nueva Actividad'">Nueva Actividad</h4>
+                    <input type="hidden" th:field="*{id}" /> <!-- Campo oculto para el ID de la actividad -->
+                    <div class="form-group col-sm-5"
+                         th:classappend="${#fields.hasErrors('nombre')} ? 'has-error'">
+                        <label for="nombre" class="form-label ">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto"
+                               th:field="*{nombre}"/>
+                        <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+                              class="text-danger" id="nombre-error">Errores</span>
+                    </div>
+                    <br>
+                    <div class="form-group col-sm-5"
+                         th:classappend="${#fields.hasErrors('descripcion')} ? 'has-error'">
+                        <label for="descripcion" class="form-label ">Descripción de la actividad:</label>
+                        <textarea class="form-control" id="descripcion"
+                                  placeholder="Descripción" rows="3" th:field="*{descripcion}"></textarea>
+                        <span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"
+                              class="text-danger" id="descripcion-error">Errores</span>
+                    </div>
+                    <br>
+                    <div class="form-group col-sm-5" th:classappend="${#fields.hasErrors('dificultad')} ? 'has-error'">
+                        <label for="dificultad">Dificultad:</label>
+                        <select class="form-select" aria-label="Default select example" id="dificultad" name="dificultad" th:field="*{dificultad}" required>
+                            <option value="">Selecciona una dificultad</option>
+                            <option value="Baja">Baja</option>
+                            <option value="Media">Media</option>
+                            <option value="Alta">Alta</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('dificultad')}" th:errors="*{dificultad}" class="text-danger" id="dificultad-error">Errores</span>
+                    </div>
+                    <br>
+                    <div class="form-group col-sm-5" th:classappend="${#fields.hasErrors('objetivo')} ? 'has-error'">
+                        <label for="objetivo">Objetivo:</label>
+                        <select class="form-select" aria-label="Default select example" id="objetivo" name="objetivo" th:field="*{objetivo}" required>
+                            <option value="">Selecciona un objetivo</option>
+                            <option value="Cardio">Cardio</option>
+                            <option value="Musculación">Musculación</option>
+                            <option value="Ocio">Ocio</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('objetivo')}" th:errors="*{objetivo}" class="text-danger" id="objetivo-error">Errores</span>
+                    </div>
+                    <br>
+                    <div class="form-group col-sm-5" th:classappend="${#fields.hasErrors('horaActividad')} ? 'has-error'">
+                        <label for="horaActividad">Hora:</label>
+                        <select class="form-select" aria-label="Default select example" id="horaActividad" name="horaActividad" th:field="*{horaActividad}" required>
+                            <option value="">Selecciona una hora</option>
+                            <option value="08:00 - 09:00">08:00 - 09:00</option>
+                            <option value="09:00 - 10:00">09:00 - 10:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('horaActividad')}" th:errors="*{horaActividad}" class="text-danger" id="horaActividad-error">Errores</span>
+                    </div>
+                    <br>
+                    <div class="form-group col-sm-5" th:classappend="${#fields.hasErrors('dias')} ? 'has-error'">
+                        <label for="dias">Días:</label>
+                        <select class="form-select" aria-label="Default select example" id="dias" name="dias" th:field="*{dias}" required>
+                            <option value="">Selecciona un día</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('dias')}" th:errors="*{dias}" class="text-danger" id="dias-error">Errores</span>
+                    </div>
+                    <br>
+                    <div class="form-group col-sm-5">
+                        <label class="control-label" for="imagen">Imagen</label>
+                        <input type="hidden" th:field="${actividad.imagen}">
+                        <input type="file" class="form-control" id="imagen" name="file">
+
+                    </div>
+                    <br>
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<footer th:replace="~{fragmentos::pie}"></footer>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+</body>
+</html>

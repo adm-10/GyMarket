@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Search</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+<main>
+    <div class="container">
+        <div class="justify-content-center">
+            <div class="py-4 text-center">
+                <h3>Busca la mejor actividad para ti</h3>
+            </div>
+            <div class="col-auto bg-light p-5">
+            <form th:action="@{/app/search/list}" method="post" th:object="${actividad}">
+                <div class="form-group col-sm-5">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la Actividad: Zumba, Spinning..."/>
+                </div>
+                <br>
+                <div class="form-group col-sm-5">
+                    <label for="objetivo">Objetivo:</label>
+                    <select  class="form-select" aria-label="Default select example" id="objetivo" name="objetivo">
+                        <option value="">Selecciona un objetivo</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Musculación">Musculación</option>
+                        <option value="Ocio">Ocio</option>
+                        <option value="Mantenimiento">Mantenimiento</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group col-sm-5">
+                    <label for="dificultad">Dificultad:</label>
+                    <select  class="form-select" aria-label="Default select example" id="dificultad" name="dificultad">
+                        <option value="">Selecciona la dificultad</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group col-sm-5">
+                    <label for="dias">Día de la semana:</label>
+                    <select class="form-select" aria-label="Default select example" id="dias" name="dias">
+                        <option value="">Selecciona un día</option>
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miércoles">Miércoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                        <option value="Sábado">Sábado</option>
+                        <option value="Domingo">Domingo</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group col-sm-5">
+                    <label for="horaActividad">Hora de preferencia:</label>
+                    <select class="form-select" aria-label="Default select example" id="horaActividad" name="horaActividad">
+                        <option value="">Selecciona una hora</option>
+                        <option value="08:00 - 09:00">08:00 - 09:00</option>
+                        <option value="09:00 - 10:00">09:00 - 10:00</option>
+                        <option value="11:00 - 12:00">11:00 - 12:00</option>
+                        <option value="17:00 - 18:00">17:00 - 18:00</option>
+                        <option value="18:00 - 19:00">18:00 - 19:00</option>
+                        <option value="20:00 - 21:00">20:00 - 21:00</option>
+                    </select>
+                </div>
+                <br>
+                <!-- Agrega otros campos de búsqueda según tus necesidades -->
+                <button type="submit" class="btn btn-primary col-sm-5">Buscar</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+</body>
+</html>

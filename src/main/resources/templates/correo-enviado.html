@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+  <title>Confirmación Correo</title>
+</head>
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+<h1>¡Correo enviado con éxito!</h1>
+<p>El correo con la factura adjunta se ha enviado correctamente.</p>
+<p>Gracias por tu compra.</p>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+</body>
+
+</html>

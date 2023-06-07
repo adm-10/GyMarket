@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+  <title>Tienda</title>
+  <!-- Custom styles for this template -->
+
+
+</head>
+<body class="text-center text-bg-dark">
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<main>
+<div class="container">
+  <div class="py-4 text-center">
+    <h3>Bienvenido a la Tienda</h3>
+  </div>
+  <div class="px-3 py-2 border-bottom mb-3">
+    <div class="container d-flex flex-wrap justify-content-center">
+      <form  class="form"  >
+        <input type="text" class="form-control"  placeholder="Buscar..."
+               name="q" th:value="${param.q}"/>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <!-- @Controller ZonaPublic-->
+    <div class="col-lg-4" th:each="producto : ${allproductos}">
+
+      <div class="card" style="cursor: pointer;">
+        <a th:href="@{/public/producto/{id}(id=${producto.id})}" class="stretched-link"></a>
+        <div class="card-header text-dark">
+          <h3 th:text="${producto.nombre}"></h3>
+        </div>
+        <div class="card-body">
+          <img th:src="${#strings.isEmpty(producto.imagen)} ? 'https://demofree.sirv.com/nope-not-here.jpg/350x260' : ${producto.imagen}"
+               class="img-fluid mx-auto d-block" alt="Image" style="height: 300px;">
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-md-6 precio text-black">
+								<span class="precio"
+                                      th:text="${#numbers.formatCurrency(producto.pvp)}"></span>
+            </div>
+            <div class="col-md-6" sec:authorize="isAuthenticated()">
+              <a th:href="@{/app/carrito/add/{id}(id=${producto.id})}" class="btn btn-success" role="button"><i class="fa fa-shopping-cart"></i>&nbsp;Comprar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</main>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+  <script type="text/javascript">
+    $(document).ready(
+            function() {
+              $('.panel-producto').children().not(".card-footer").click(
+                      function() {
+                        window.location = $(this).parent().find("a").attr("href");
+                        return false;
+                      });
+            });
+  </script>
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/js/app.js}"></script>
+</th:block>
+
+</body>
+</html>

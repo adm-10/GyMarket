@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+    margin-bottom: 50px;
+    border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+    margin-bottom: 0;
+}
+html {
+    min-height: 100%;
+    position: relative;
+}
+#content {
+    /* ... */
+    padding-bottom: 81px; /* El tamaño del footer para evitar el sobreposicionamiento */
+}
+
+#footer {
+    width: 100%;
+    height: 81px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+
+
+.panel-heading {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.precio {
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+.panel-producto {
+    cursor: pointer;
+}
+
+/* Estilos para la factura */
+
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.invoice-body .table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.invoice-body .table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.invoice-body .table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+}
+.form{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

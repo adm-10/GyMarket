@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Actividad</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-1 ">
+            <div class="col-md-8">
+                <img th:src="${#strings.isEmpty(actividad.imagen)} ? 'https://demofree.sirv.com/nope-not-here.jpg/350x260' : ${actividad.imagen}"
+                     class="img-fluid mx-auto d-block" alt="Image">
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h3 th:text="${actividad.nombre}"></h3>
+                </div>
+                <div>
+                    <p th:text="${actividad.descripcion}"></p>
+                </div>
+                <div>
+                    <h3 th:text="${actividad.dias}"></h3>
+                </div>
+                <div>
+                    <h3 th:text="${actividad.horaActividad}"></h3>
+                </div>
+
+                <div class="pull-right">
+
+                </div>
+                <a th:href="@{/app/carritoreserva/add/{id}(id=${actividad.id})}" type="button"
+                   class="btn btn-lg btn-success" sec:authorize="isAuthenticated()">
+                    <i class="fa fa-shopping-cart"></i>Reservar</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+</body>
+</html>

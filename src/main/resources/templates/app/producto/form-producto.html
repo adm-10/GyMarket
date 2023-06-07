@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+  <title>Formulario Producto</title>
+</head>
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+<main>
+  <div class="container">
+    <div class="justify-content-center">
+      <div class="py-4 text-center">
+        <h3>Formulario Producto</h3>
+      </div>
+      <div class="col-auto bg-light p-5">
+        <form method="post" action="#" enctype="multipart/form-data"
+              th:action="${producto.id != 0} ? @{/app/producto/edit/submit} : @{/app/producto/new/submit}"
+              th:object="${producto}">
+          <h4 class="mb-3" th:text="${producto.id != 0} ? 'Editar Producto' : 'Nuevo Producto'">Datos Producto</h4>
+          <input type="hidden" th:field="*{id}" /> <!-- Campo oculto para el ID de la actividad -->
+          <div class="form-group col-sm-5"
+               th:classappend="${#fields.hasErrors('nombre')} ? 'has-error'">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" placeholder="nombre del producto"
+                   th:field="*{nombre}"/>
+            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+                  class="text-danger" id="nombre-error">Errores</span>
+          </div>
+          <br>
+          <div class="form-group col-sm-5"
+               th:classappend="${#fields.hasErrors('descripcion')} ? 'has-error'">
+            <label for="descripcion" class="form-label ">Descripción de la actividad:</label>
+            <textarea class="form-control" id="descripcion"
+                      placeholder="Descripción" rows="3" th:field="*{descripcion}"></textarea>
+            <span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"
+                  class="text-danger" id="descripcion-error">Errores</span>
+          </div>
+          <br>
+          <div class="form-group col-sm-5"
+               th:classappend="${#fields.hasErrors('pvp')} ? 'has-error'">
+            <label class="control-label" for="pvp">PVP</label> <input
+                  type="number" class="form-control" step="any" id="pvp" placeholder="1.0"
+                  th:field="*{pvp}"/>
+            <span th:if="${#fields.hasErrors('pvp')}"
+                  th:errors="*{pvp}" class="text-danger" id="pvp-error">Errores</span>
+
+          </div>
+          <br>
+          <div class="form-group col-sm-5">
+            <label class="control-label" for="imagen">Imagen</label>
+            <input type="hidden" th:field="${producto.imagen}">
+            <input type="file" class="form-control" id="imagen" name="file">
+          </div>
+          <br>
+          <button type="submit" class="btn btn-outline-secondary col-sm-5">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragmentos::pie}"></footer>
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Borrar Reserva</title>
+</head>
+
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+
+<div class="container">
+    <div>
+        <div class="col-md-10 offset-md-1 ">
+            <div class="mt-4 p-1 bg-primary text-white rounded">
+                <h2 class="text-center">Su Reserva ha sido cancelada</h2>
+            </div>
+        </div>
+        <br>
+        <div>
+            <a class="btn btn-success col-sm-2" th:href="@{/app/list}">Hacer nueva Reserva</a>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragmentos::pie}"></footer>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+
+</body>
+</html>

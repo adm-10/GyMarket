@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragmentos::encabezado(~{::title}, ~{})}">
+    <title>Carrito</title>
+</head>
+<body>
+<header th:replace="~{fragmentos::barra-nav}"></header>
+
+<div class="container">
+    <div class="row" th:if="${carrito == null}">
+        <div class="col-md-10 offset-md-1">
+            <div class="mt-4 p-1 bg-primary text-white rounded">
+                <h2 class="text-center">Aún no ha seleccionado ningún producto para comprar</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row" th:unless="${carrito == null}">
+        <div class="col-sm-12 col-md-10 offset-md-1">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="text-center">Total</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="producto : ${carrito}">
+                    <td class="col-md-8">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <img class="img-thumbnail"
+                                     th:src="${#strings.isEmpty(producto.imagen)} ? 'https://demofree.sirv.com/{titulo}nope-not-here.jpg' : ${producto.imagen}"
+                                     style="width: 150px;">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h4 class="mt-0" th:text="${producto.nombre}">Nombre del producto</h4>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-md-1 text-center"><strong th:text="${#numbers.formatCurrency(producto.pvp)}"></strong></td>
+                    <td class="col-md-2">
+                        <a th:href="@{/app/carrito/eliminar/{id}(id=${producto.id})}" class="btn btn-danger">
+                            <span class="fas fa-trash"></span> Eliminar</a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td><h3>Total</h3></td>
+                    <td class="text-right"><h3>
+                        <strong th:text="${#numbers.formatCurrency(total_carrito)}"></strong>
+                    </h3></td>
+                </tr>
+
+                <tr>
+                    <td> </td>
+                    <td>
+                        <a th:href="@{/app/tienda}" class="btn btn-info">
+                            <span class="fas fa-shopping-cart"></span> Seguir mirando</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/app/carrito/finalizar}" class="btn btn-success">
+                            <span class="fas fa-credit-card"></span> Realizar Compra
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+
+<footer th:replace="~{fragmentos::pie}"></footer>
+
+<th:block th:replace="~{fragmentos::jsfinal(~{::script})}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</th:block>
+</body>
+
+</html>
