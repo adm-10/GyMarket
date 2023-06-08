@@ -16,7 +16,7 @@
         <form method="post" action="#" enctype="multipart/form-data"
               th:action="${producto.id != 0} ? @{/app/producto/edit/submit} : @{/app/producto/new/submit}"
               th:object="${producto}">
-          <h4 class="mb-3" th:text="${producto.id != 0} ? 'Editar Producto' : 'Nuevo Producto'">Datos Producto</h4>
+          <h4 class="mb-3" th:text="${producto.id != 0} ? 'Form Producto' : 'Form Producto'">Datos Producto</h4>
           <input type="hidden" th:field="*{id}" /> <!-- Campo oculto para el ID de la actividad -->
           <div class="form-group col-sm-5"
                th:classappend="${#fields.hasErrors('nombre')} ? 'has-error'">

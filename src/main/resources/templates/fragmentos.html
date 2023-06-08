@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li>
-                    <a sec:authorize="isAuthenticated()" class="nav-link text-white"
+                    <a sec:authorize="hasAnyRole('USER', 'PREMIUM')"  class="nav-link text-white"
                        th:href="@{/app/miscompras}">
                         <span class="fas fa-plus"></span>
                         <span>Mis Compras</span>
@@ -85,7 +85,7 @@
                 </li>
                 <!-- Ver mis Reservas-->
                 <li>
-                    <a sec:authorize="isAuthenticated()"  class="nav-link text-white"
+                    <a sec:authorize="hasAnyRole('USER', 'PREMIUM')"  class="nav-link text-white"
                        th:href="@{/app/misreservas}">
                         <span class="far fa-check-square"></span>
                         <span >Mis Reservas</span>
